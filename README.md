@@ -1,90 +1,117 @@
-# Algorithms and Data Structures(ADS) - 2019-2020
-## Barbu Angelo-Gabriel - angelo.barbu123@gmail.com
+# Algorithms and Data Structures (ADS) - ATP Cup Tennis Tournament Automation
 
-### Description:
-During the International ATP Cup Tournament, each participating country has a team of players. This team will represent their country in a series of matches played against the members of the other teams. It is desired to create a software solution that will automate the tournament.
-The solution simulates the tennis tournament and automates it, respecting the given tasks.
+## Author
+Barbu Angelo-Gabriel  
+[angelo.barbu123@gmail.com](mailto:angelo.barbu123@gmail.com)
 
-### Tasks:
-1. A circular doubly linked list with sentinel, will be created, in which the countries will be added at the end of the list.
+## Project Overview
 
-2. From the list generated in the previous requirement, countries will be eliminated until their total number is the maximum value of power of 2 possible by the following criteria: the lowest initial score of the country, being the arithmetic average of the players that represent the country.
+This project is a simulation of an ATP Cup Tennis Tournament, designed to automate match management between international teams of players representing their respective countries. The solution features complex data structures and algorithms that manage the flow of the tournament, player interactions, and scoring in compliance with predefined rules.
 
-3. The following data structures will be implemented and the following procedures will be performed on them for the good progress of the tournament:
-- A stack will be created in which all the countries remaining in the tournament will be added, starting from the sentinel.
-- Two countries will be removed from the stack, successively, between which the matches will be played. The procedure is repeated until the stack is empty.
-- For each pair of countries extracted from the stack, a queue will be created in which the matches between the players will be stored.
-- Each player in the lot of the first country will play with each player in the lot of the second country, in the following order: the first player in the lot of the first country confronts, in turn, with all the players in the second lot, the second player in the lot of the first country with all the players in the second, etc.
-- The player with the higher personal score wins. He is added 5 points to his personal score, and the country for which he plays receives 3 points to the local score. If the two players have equal personal scores, it is considered a draw. Each player is added 2 points to his personal score, and each country receives 1 point to the local score.
-- The queue of matches between two countries has been emptied. The confrontation between the two is over. The local scores of the two countries will be checked. The two countries will add the local score, accumulated during the matches between the players, to the global score, but only the country with the higher local score will win.
-- In case of a draw, the country in whose lot the player with the highest personal score (between the personal scores of the players of the two countries) is considered the winner. If there is a tie between the two personal scores of the two best players, the first country to be removed from the stack is declared the winner.
-- A WINNER stack will be created, in which the winning countries will be added after the matches.
-- When the initial stack becomes empty, this stage of the tournament can be considered over. The countries will be removed from the WINNER stack and added in turn to the initial stack. The previous procedures will be repeated for each stage of the tournament, in other words until only one winning country remains in the WINNER stack.
+## Key Features
+- **Circular Doubly Linked List**: Manages the addition and removal of participating countries.
+- **Stack & Queue**: Used for player matchups and score tracking between competing countries.
+- **Binary Search Tree (BST)**: Stores player data from the final four countries, sorted by personal scores.
+- **Checker**: A set of automated tests verifying the solution’s correctness and efficiency.
 
-4. A BST - binary search tree will be created, in which the players of the last 4 countries remaining in the tournament will be found, depending on the personal score obtained from the end of the last stage of the tournament.
-If one of the players has the same personal score as one already existing in the tree, the player whose name is smaller lexicographically will be added. (The last name is compared first, in case of equality the first name of the players will be compared.)
+---
 
-5. In the cerinte.in file, as presented above, the name and surname of 2 players will be found. The number of players between them in the BST is required (the 2 players are not included). More explicitly, the number of players who have the personal score included between the two personal scores is requested.
+## Project Structure
 
-### Solution:
-The solution has the following files:
-- main.c
-- functions.c, containing the functions that solve the tasks
-- header.h, containing the structures and the function prototypes
-- Makefile, containing the build and clean targets
+The project is composed of the following core files:
 
-The functions.c contains the following functions:
+- **main.c**: Contains the main function handling input/output and executing solution components.
+- **functions.c**: Implements the main functions and data structure operations.
+- **header.h**: Defines data structures and function prototypes.
+- **Makefile**: Includes build and clean targets for compilation and file management.
 
-- fileOpenCheck, checks if the file was opened correctly
+---
 
-- doubleAllocCheck, listAllocCheck, charAllocCheck, etc are functions that check if the memory was allocated correctly
+## Task Details
 
-- Read is a function that reads the input file and stores the data in the doubly circular linked list with sentinel
+### Task 1: Initialize Tournament Countries
+- **Description**: Create a circular doubly linked list with a sentinel node, appending countries to the list’s end.
+  
+### Task 2: Filter Countries
+- **Description**: Eliminate countries until only a power-of-2 count remains. Countries are removed based on their initial score (the average score of players representing that country).
 
-- WriteCountry prints the name of the countries from the list
+### Task 3: Tournament Simulation
+- **Description**: Using stacks and queues, simulate matches between countries:
+  - Countries remaining in the tournament are added to a stack.
+  - Pairs of countries are dequeued for match play. Each player in a team competes against all players of the opposing team.
+  - Scores are updated based on match results:
+    - **Win**: +5 points to player score; +3 points to country score.
+    - **Draw**: +2 points to player score; +1 point to country score.
+  - The winner (or the first dequeued country in case of a tie) is moved to the WINNER stack.
+  - Repeat until only one country remains as the tournament winner.
 
-- Write checks the information stored in the list
+### Task 4: Binary Search Tree (BST) Creation
+- **Description**: Players from the last four countries are organized in a BST, sorted by their final scores. Ties are broken lexicographically by player name (last name, then first name).
 
-- deleteNode, pushStack, popStack, createQueue, enQueue, deQueu are functions that implement the operations on the stack and queue
+### Task 5: BST Search
+- **Description**: Given two players, count the number of players in the BST with scores between their scores, excluding the given players.
 
-- Power is a function that computes the number of countries that will remain in the list
+---
 
-- deleteCountry is a function that deletes the countries with the lowest score until the number of countries is equal to the value returned by Power
+## Solution Details
 
-- Task3 is a function that solves the third task
+### functions.c - Key Functions
+- **fileOpenCheck**: Verifies file access for read/write operations.
+- **Memory Allocation Checks**: Functions like `doubleAllocCheck`, `listAllocCheck`, and `charAllocCheck` ensure correct memory allocation.
+- **List Operations**: `deleteNode`, `pushStack`, `popStack`, `createQueue`, `enQueue`, and `deQueue` perform stack and queue manipulations.
+- **BST Operations**: `newBSTnode`, `insertBST`, and `printBST` (Right-Root-Left order) manage the binary search tree.
+- **Tournament Logic**: `Task3` handles country pairing, score updating, and WINNER stack management.
+- **BST Scoring**: `checkBST` verifies the existence of specific players in the BST, while `countBST` counts players with scores within a specified range.
 
-- newBSTnode, insertBST, printBST(Right-Root-Left) are functions that implement the operations on the binary search tree
+### Makefile
+The Makefile provides two main targets:
+- **Build**: Compiles `main.c` and `functions.c` to produce the executable.
+- **Clean**: Removes object files and the executable.
 
-- Task4 is a function that solves the fourth task
+---
 
-- checkBST is a function that checks if the two players from the input file are in the binary search tree
+## Running the Solution
 
-- countBST is a function that counts the players whose score is between the scores of the two players from the input file
+### Prerequisites
+Ensure you have the following installed:
+- **C Compiler**: GCC or equivalent.
+- **Make**: For automated compilation.
 
-- Task5 is a function that solves the fifth task
+### Execution
+1. Clone this repository.
 
-- freeList, freeBST are functions that free the memory allocated for the list and the binary search tree
+2. Compile the project:
+   ```bash
+   make
+   ```
 
-The main.c contains the main function, that has as parameters the names of the input and output files
+3. Run the executable:
+    ```bash
+    ./tenis
+    ```
 
+4. To clean up generated files:
+    ```bash
+    make clean
+    ```
 
+---
 
-### Checker
-Autor Checker: Eduard-Claudiu Ciurezu
+## Checker
 
-CHECKER-ul contine 15 teste:
-"data" contine input-ul testelor
-"ref" contine output-ul corect cu care este comparat output-ul programului
-"checker.sh" este script-ul shell ce constituie checker-ul efectiv. Pentru rularea corecta, este necesara comanda "make".
-Se ruleaza checker.sh, iar obtinerea rezultatului 135p/135p valideaza corectitudinea si eficienta programului.
+### Author
+Eduard-Claudiu Ciurezu
 
-Checker author: Eduard-Claudiu Ciurezu
+### Description
+The checker provides 15 test cases to validate program correctness and performance.
+- data: Contains test inputs.
+- ref: Contains expected outputs for comparison.
+- checker.sh: Shell script that automates test execution.
 
-The checker contains 15 tests:
-- "data" contains the input of the tests
-- "ref" contains the correct output with which the program output is compared
-- "checker.sh" is the shell script that constitutes the actual checker. For correct running, the "make" command is required.
-- Run checker.sh, and obtaining the result 135p / 135p validates the correctness and efficiency of the program.
+### Usage
+Run the checker
+    ```bash
+    ./checker.sh
+    ```
 
-
-
+Achieving a score of **135p / 135p** confirms correct and efficient program operation.
